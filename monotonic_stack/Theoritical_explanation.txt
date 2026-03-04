@@ -1,0 +1,204 @@
+1️⃣ How to Identify Monotonic Stack Problems
+
+You should ask yourself these questions when reading a problem.
+
+Question 1
+
+Does the problem involve nearest element?
+
+Examples:
+
+Nearest greater element
+Nearest smaller element
+Next greater element
+Previous smaller element
+
+If yes → Stack pattern likely
+
+Question 2
+
+Does the naive solution look like this?
+
+for each element
+    scan left or right
+
+Meaning:
+
+nested loops
+O(n²)
+
+If yes → strong signal for monotonic stack.
+
+Question 3
+
+Is the problem asking for span, boundary, or influence of an element?
+
+Examples:
+
+stock span
+daily temperatures
+largest rectangle histogram
+
+These are classic monotonic stack problems.
+
+2️⃣ Naive Approach + Interview Explanation
+Problem Example
+
+Next Greater Element
+
+Array
+
+[2,1,5,3,4]
+
+Goal
+
+Find next greater element on the right
+Naive Solution
+
+For every element:
+
+scan the right side until you find greater element
+
+Pseudo:
+
+for i = 0 → n
+    for j = i+1 → n
+        if arr[j] > arr[i]
+            answer = arr[j]
+            break
+Time Complexity
+O(n²)
+
+Worst case:
+
+array = decreasing
+
+Example
+
+[9,8,7,6,5]
+
+Every element scans entire right side.
+
+Interview Explanation
+
+You say:
+
+The brute force approach checks elements repeatedly, giving O(n²).
+Instead, we maintain a stack that keeps only useful elements in monotonic order.
+When a stronger element arrives, we resolve multiple pending elements at once.
+Since every element is pushed and popped at most once, the complexity becomes O(n).
+
+3️⃣ Time Complexity Comparison
+Approach	Idea	Time
+Brute force	Scan right for every element	O(n²)
+Monotonic stack	Maintain useful candidates	O(n)
+
+Why O(n)?
+
+Because:
+
+each element pushed once
+each element popped once
+
+Total operations ≤ 2n
+
+4️⃣ Use Cases of Monotonic Stack
+
+Now the part most explanations miss — why this pattern exists in the real world.
+
+A. Daily Life Analogy
+
+Imagine people standing in line.
+
+Each person wants to know:
+
+Who is the first taller person ahead of me?
+
+Example heights
+
+2m
+1m
+5m
+3m
+4m
+
+When 5m appears
+
+1m → 5m
+2m → 5m
+
+Both get their answers instantly.
+
+Shorter people before become irrelevant.
+
+That is exactly what a monotonic stack does.
+
+B. Real Computer Science Analogy
+
+Think of event dominance.
+
+Example: priority systems.
+
+If a higher priority event appears, all weaker pending events become irrelevant.
+
+Example domains:
+
+CPU scheduling
+network packet priority
+task queues
+
+Similarly:
+
+bigger element arrives
+smaller candidates removed
+C. Data Structure Problem Analogy
+
+Classic monotonic stack problems:
+
+Next Greater Element
+
+Find nearest larger value.
+
+Daily Temperatures
+73 74 75 71 69 72 76
+
+Find days until warmer temperature.
+
+Stock Span
+100 80 60 70 60 75 85
+
+Find number of previous days with smaller price.
+
+Largest Rectangle in Histogram
+
+Each bar asks:
+
+How far can I extend until a smaller bar blocks me?
+5️⃣ Most Important Property
+
+Yes — you were correct earlier.
+
+The stack must be monotonic (sorted).
+
+Two types exist:
+
+Monotonic Increasing Stack
+1
+3
+5
+7
+Monotonic Decreasing Stack
+9
+7
+5
+3
+
+If a new element breaks the order:
+
+pop elements until order restored
+
+This guarantees only useful candidates remain.
+
+Final One-Line Summary (Best for Notes)
+
+A monotonic stack maintains elements in sorted order so that when a stronger element appears, weaker elements are removed immediately, allowing nearest greater/smaller queries to be solved in O(n) instead of O(n²).
